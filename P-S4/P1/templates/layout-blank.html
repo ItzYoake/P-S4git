@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+{% load static %}
+{% load tz %}
+{% load humanize %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>
+        {% block title %}
+  
+        {% endblock %}
+    </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/favicon.png' %}">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="/" class="brand-logo">
+                <img class="logo-abbr" src="{% static 'assets/images/logo.png' %}" alt="">
+                <img class="logo-compact" src="{% static 'assets/images/logo-text.png' %}" alt="">
+                <img class="brand-title" src="{% static 'assets/images/logo-text.png' %}" alt="">
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content">
+                <nav class="navbar navbar-expand">
+                    <div class="collapse navbar-collapse justify-content-between">
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="quixnav">
+            <div class="quixnav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label first">Main Menu</li>
+                    <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
+                    </li> -->
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-single-04"></i><span class="nav-text">Teacher</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{%url 'Teacher:read'%}">Read</a></li>
+                            <li><a href="{%url 'Teacher:create'%}">Create</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        class="icon icon-single-04"></i><span class="nav-text">Class</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{%url 'Class:read'%}">Read</a></li>
+                            <li><a href="{%url 'Class:create'%}">Create</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        class="icon icon-single-04"></i><span class="nav-text">Student</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{%url 'Student:read'%}">Read</a></li>
+                            <li><a href="{%url 'Student:create'%}">Create</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        class="icon icon-single-04"></i><span class="nav-text">Schedule</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{%url 'Schedule:read'%}">Read</a></li>
+                            <li><a href="{%url 'Schedule:create'%}">Create</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        class="icon icon-single-04"></i><span class="nav-text">Attendance</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{%url 'Attendance:read'%}">Read</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        class="icon icon-single-04"></i><span class="nav-text">Rate</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{%url 'Rate:read'%}">Read</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        class="icon icon-single-04"></i><span class="nav-text">Prediction</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{%url 'Predict:choose'%}">Read</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        {% if request.user.is_authenticated %}
+                        <form action="{%url 'User:logout'%}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                              Logout
+                            </button>
+                          </form>
+                        {% else %}
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon icon-single-04"></i>
+                            <span class="nav-text">LOGIN/REGISTER</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{%url 'User:login'%}">Login</a></li>
+                            <li><a href="{%url 'User:register'%}">Register</a></li>
+                        </ul>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <div class="container-fluid">
+                {% if form.message_tag == 'success' %}
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path></svg>
+                  <div>{{ form.message }}</div>
+                </div>
+                {% elif form.message_tag == 'error' %}
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"></path></svg>
+                    <div>{{ form.message }}</div>
+                    </div>
+                {% endif %}
+                {% block content %}
+    
+                {% endblock %}
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="{% static 'assets/vendor/global/global.min.js' %}"></script>
+    <script src="{% static 'assets/js/quixnav-init.js' %}"></script>
+    <script src="{% static 'assets/js/custom.min.js' %}"></script>
+
+    <script src="{% static 'assets/vendor/highlightjs/highlight.pack.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins-init/datatables.init.js' %}"></script>
+
+</body>
+
+</html>

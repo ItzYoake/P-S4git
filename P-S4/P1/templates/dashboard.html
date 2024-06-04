@@ -1,0 +1,61 @@
+{% extends "layout-blank.html" %}
+{% block title %}
+Dashboard
+{% endblock %}
+{% block content %}
+
+    <h1>Dashboard</h1>
+
+    <!-- Display total number of teachers -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Total number of teachers: {{ total_teachers }}</h5>
+        </div>
+    </div>
+
+    <!-- Display total number of students -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Total number of students: {{ total_students }}</h5>
+        </div>
+    </div>
+
+    <!-- Display combined male and female population of teachers and students -->
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="populationChart" width="200" height="200"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Chart for combined teacher and student population
+        var ctx = document.getElementById('populationChart').getContext('2d');
+        var populationChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Teachers Male', 'Teachers Female', 'Students Male', 'Students Female'],
+                datasets: [{
+                    label: 'Population',
+                    backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)'],
+                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+                    borderWidth: 1,
+                    data: [
+                        {{ teacher_gender_counts.Male }},
+                        {{ teacher_gender_counts.Female  }},
+                        {{ student_gender_counts.Male }},
+                        {{ student_gender_counts.Female }}
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+{% endblock %}
